@@ -1,0 +1,14 @@
+theme = Carbonfox
+
+font-family = "IosevkaTerm Nerd Font Mono"
+font-style = Reg
+font-size = 12
+font-feature = "liga"
+
+background-opacity = 0.85
+background-blur = false
+confirm-close-surface = false
+
+gtk-titlebar = false
+
+keybind = ctrl+enter=unbind

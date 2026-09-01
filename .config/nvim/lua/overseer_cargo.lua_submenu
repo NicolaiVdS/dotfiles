@@ -1,0 +1,89 @@
+local overseer = require("overseer")
+
+local M = {}
+
+local function get_cargo_members(cb)
+	vim.fn.jobstart({ "cargo", "metadata", "--no-deps", "--format-version", "1" }, {
+		stdout_buffered = true,
+		on_stdout = function(_, output)
+			local ok, data = pcall(vim.json.decode, table.concat(output, ""))
+			if not ok or not data.packages then
+				cb({})
+				return
+			end
+			local members = {}
+			for _, pkg in ipairs(data.packages) do
+				table.insert(members, pkg.name)
+			end
+			table.sort(members)
+			cb(members)
+		end,
+	})
+end
+
+local function run_cargo(subcommand, member, extra_args)
+	local args = { subcommand }
+	if member ~= "(all)" then
+		vim.list_extend(args, { "-p", member })
+	elseif subcommand ~= "run" then
+		table.insert(args, "--workspace")
+	end
+	if extra_args then
+		vim.list_extend(args, extra_args)
+	end
+
+	overseer
+		.new_task({
+			name = "cargo " .. table.concat(args, " "),
+			cmd = { "cargo" },
+			args = args,
+			components = { "default" },
+		})
+		:start()
+end
+
+local actions = {
+	{ label = "Build", subcommand = "build" },
+	{ label = "Run", subcommand = "run" }, -- no "(all)" offered for run, see below
+	{ label = "Test", subcommand = "test" },
+	{ label = "Clippy", subcommand = "clippy", extra_args = { "--all-targets", "--all-features" } },
+}
+
+function M.pick()
+	if vim.fn.filereadable("Cargo.toml") ~= 1 then
+		vim.notify("No Cargo.toml in cwd", vim.log.levels.WARN)
+		return
+	end
+
+	-- Step 1: which cargo action
+	vim.ui.select(actions, {
+		prompt = "Cargo",
+		format_item = function(item)
+			return item.label
+		end,
+	}, function(action)
+		if not action then
+			return
+		end
+
+		-- Step 2: which package
+		get_cargo_members(function(members)
+			local choices = members
+			if action.subcommand ~= "run" then
+				choices = vim.deepcopy(members)
+				table.insert(choices, 1, "(all)")
+			end
+
+			vim.ui.select(choices, {
+				prompt = action.label .. ": package",
+			}, function(member)
+				if not member then
+					return
+				end
+				run_cargo(action.subcommand, member, action.extra_args)
+			end)
+		end)
+	end)
+end
+
+return M

@@ -1,0 +1,1628 @@
+========================================
+FILE: combine.sh
+========================================
+
+#!/usr/bin/env bash
+
+OUTPUT_FILE="combined.txt"
+
+# Clear output file if it exists
+> "$OUTPUT_FILE"
+
+# Find all regular files and process them
+find . -type f | sort | while read -r file; do
+    # Skip the output file itself
+    if [[ "$file" == "./$OUTPUT_FILE" ]]; then
+        continue
+    fi
+
+    echo "========================================" >> "$OUTPUT_FILE"
+    echo "FILE: ${file#./}" >> "$OUTPUT_FILE"
+    echo "========================================" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+
+    cat "$file" >> "$OUTPUT_FILE"
+
+    echo -e "\n\n" >> "$OUTPUT_FILE"
+done
+
+echo "All files combined into $OUTPUT_FILE"
+
+
+
+========================================
+FILE: init.lua
+========================================
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("vim-options")
+require("lazy").setup("plugins")
+
+
+
+========================================
+FILE: lazy-lock.json
+========================================
+
+{
+  "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
+  "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
+  "conform.nvim": { "branch": "master", "commit": "619363c30309d29ffa631e67c8183f2a72caa373" },
+  "crates.nvim": { "branch": "main", "commit": "694357861ec9ebf12475ddcdd04ea45a0923c32d" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
+  "gitsigns.nvim": { "branch": "main", "commit": "eb60cc7b94c46005237fd34170d76f3a089a90aa" },
+  "indent-blankline.nvim": { "branch": "master", "commit": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03" },
+  "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
+  "lazygit.nvim": { "branch": "main", "commit": "a04ad0dbc725134edbee3a5eea29290976695357" },
+  "lensline.nvim": { "branch": "main", "commit": "6d0beaa5548ff54b8f3d9b3195aea1369ccf62a4" },
+  "lualine.nvim": { "branch": "master", "commit": "221ce6b2d999187044529f49da6554a92f740a96" },
+  "mason-lspconfig.nvim": { "branch": "main", "commit": "47059d71b42d74b0a1e9f61c1d99d301039c3b5b" },
+  "mason-tool-installer.nvim": { "branch": "main", "commit": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc" },
+  "mason.nvim": { "branch": "main", "commit": "2a6940af80375532e5e9e7c1f2fc6319a1b7a69d" },
+  "neo-tree.nvim": { "branch": "v3.x", "commit": "ebd66767191714e008ce73b769518a763ff31bdc" },
+  "nightfox.nvim": { "branch": "main", "commit": "4dacd3f0185a2227bdf3b6c0975a8f0bf87cac9a" },
+  "noice.nvim": { "branch": "main", "commit": "7bfd942445fb63089b59f97ca487d605e715f155" },
+  "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
+  "nvim-autopairs": { "branch": "master", "commit": "7b9923abad60b903ece7c52940e1321d39eccc79" },
+  "nvim-dap": { "branch": "master", "commit": "9e848e09a697ee95302a3ef2dd43fd6eb709e570" },
+  "nvim-dap-ui": { "branch": "master", "commit": "1a66cabaa4a4da0be107d5eda6d57242f0fe7e49" },
+  "nvim-highlight-colors": { "branch": "main", "commit": "e4c7af0211866162d999ce0bdd6a029302e19139" },
+  "nvim-lspconfig": { "branch": "master", "commit": "2c227d59589957fa4404b7de5f61d72c0a78a62d" },
+  "nvim-nio": { "branch": "master", "commit": "21f5324bfac14e22ba26553caf69ec76ae8a7662" },
+  "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
+  "nvim-platformio.lua": { "branch": "main", "commit": "e65fd65565da5c1d98c568bd0cdcad16627cdb14" },
+  "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },
+  "nvim-ts-autotag": { "branch": "main", "commit": "88c1453db4ba7dd24131086fe51fdf74e587d275" },
+  "nvim-web-devicons": { "branch": "master", "commit": "09d1324e264c6950262dbe02a9bce2933a6800db" },
+  "overseer.nvim": { "branch": "master", "commit": "a93d9f6d6defdac4bcd6d2c8ba988650e42e0a0e" },
+  "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
+  "presence.nvim": { "branch": "main", "commit": "87c857a56b7703f976d3a5ef15967d80508df6e6" },
+  "rustaceanvim": { "branch": "master", "commit": "5a3a4158857ee1f7ec839b6ddd87cc0083a19c5f" },
+  "smartcolumn.nvim": { "branch": "main", "commit": "b9cdbdf42f7ac5a659204cd5926017c7ff724a19" },
+  "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
+  "telescope.nvim": { "branch": "master", "commit": "427b576c16792edad01a92b89721d923c19ad60f" },
+  "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "6264451f14119d63a52580e5198d6baf8518b0b2" },
+  "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
+  "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
+  "tree-sitter-manager.nvim": { "branch": "main", "commit": "09e3a321eea8100cacd2e759c3a6c9d350295fab" },
+  "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
+  "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
+}
+
+
+
+========================================
+FILE: lua/lualine/forgejo.lua
+========================================
+
+local M = {}
+
+local cache = {
+  ci = nil,
+  prs = nil,
+  issues = nil,
+  last_update = 0,
+}
+
+-- icons (nerd font)
+local ci_icons = {
+  success = "󰄬",
+  failure = "󰅙",
+  running = "󰑮",
+  pen = "󰏤",
+  unknown = "󰞋",
+}
+
+local icons = {
+  prs = "",
+  issues = "",
+}
+
+-- highlight groups
+local function hl(name, fg)
+  local base = vim.api.nvim_get_hl(0, { name = "StatusLine" })
+  vim.api.nvim_set_hl(0, name, {
+    fg = fg,
+    bg = base.bg,
+    bold = true,
+  })
+end
+
+hl("ForgejoCISuccess", "#98c379")
+hl("ForgejoCIFailure", "#e06c75")
+hl("ForgejoCIRunning", "#e5c07b")
+hl("ForgejoCIPending", "#61afef")
+hl("ForgejoCIUnknown", "#7f8490")
+
+local base = vim.api.nvim_get_hl(0, { name = "StatusLine" })
+vim.api.nvim_set_hl(0, "ForgejoText", {
+  fg = "#cdd6f4",
+  bg = base.bg,
+})
+
+local ci_hl = {
+  success = "ForgejoCISuccess",
+  failure = "ForgejoCIFailure",
+  running = "ForgejoCIRunning",
+  pending = "ForgejoCIPending",
+  unknown = "ForgejoCIUnknown",
+}
+
+-- detect git remote
+local function get_git_remote()
+  local handle = io.popen("git remote get-url origin 2>/dev/null")
+  if not handle then return nil end
+
+  local result = handle:read("*a")
+  handle:close()
+
+  if not result or result == "" then return nil end
+  result = result:gsub("%s+", "")
+
+  local host, user, repo
+
+  host, user, repo = result:match("ssh://[^@]+@([^:]+):%d+/([^/]+)/([^/%.]+)")
+  if host then return { host = host, user = user, repo = repo } end
+
+  host, user, repo = result:match("git@([^:]+):([^/]+)/([^/%.]+)")
+  if host then return { host = host, user = user, repo = repo } end
+
+  host, user, repo = result:match("https://([^/]+)/([^/]+)/([^/%.]+)")
+  if host then return { host = host, user = user, repo = repo } end
+
+  return nil
+end
+
+-- generic forgejo request
+local function forgejo_request(remote, path, callback)
+  local token = vim.env.FORGEJO_TOKEN
+  if not token then return end
+
+  local url = string.format("https://%s/api/v1%s", remote.host, path)
+  url = url:gsub("{user}", remote.user):gsub("{repo}", remote.repo)
+
+  local cmd = string.format(
+    'curl -s -H "Authorization: token %s" "%s"',
+    token,
+    url
+  )
+
+  vim.fn.jobstart(cmd, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if not data then return end
+
+      local text = table.concat(data, "")
+      if text == "" then return end
+
+      local ok, decoded = pcall(vim.fn.json_decode, text)
+      if ok then
+        callback(decoded)
+      end
+    end,
+  })
+end
+
+-- refresh forgejo data
+local function refresh()
+  local remote = get_git_remote()
+  if not remote then return end
+
+  -- CI runs
+  forgejo_request(remote, "/repos/{user}/{repo}/actions/runs", function(data)
+    if data and data.workflow_runs then
+      local runs = data.workflow_runs
+
+      if #runs > 0 then
+        table.sort(runs, function(a, b)
+          return a.id > b.id
+        end)
+
+        local run = runs[1]
+
+        local status = run.status
+        if status == "completed" then
+          status = run.conclusion or "unknown"
+        end
+
+        cache.ci = status
+      end
+    end
+
+    vim.cmd("redrawstatus")
+  end)
+
+  -- PR count
+  forgejo_request(remote, "/repos/{user}/{repo}/pulls?state=open&limit=50", function(data)
+    if type(data) == "table" then
+      cache.prs = #data
+    end
+
+    vim.cmd("redrawstatus")
+  end)
+
+  -- issue count
+  forgejo_request(remote, "/repos/{user}/{repo}/issues?type=issues&state=open&limit=50", function(data)
+    if type(data) == "table" then
+      cache.issues = #data
+    end
+
+    vim.cmd("redrawstatus")
+  end)
+
+  cache.last_update = os.time()
+end
+
+-- lualine component
+function M.component()
+  local now = os.time()
+
+  if now - cache.last_update > 30 then
+    refresh()
+  end
+
+  local parts = {}
+
+  if cache.ci then
+    local icon = ci_icons[cache.ci] or ci_icons.unknown
+    local hl = ci_hl[cache.ci] or ci_hl.unknown
+
+    table.insert(parts, string.format("%%#%s#%s%%#Normal#", hl, icon))
+  end
+
+  if cache.prs then
+    table.insert(parts,
+      string.format(" %%#ForgejoText#%s %d%%#Normal#", icons.prs, cache.prs)
+    )
+  end
+
+  if cache.issues then
+    table.insert(parts,
+      string.format(" %%#ForgejoText#%s %d%%#Normal#", icons.issues, cache.issues)
+    )
+  end
+
+  if #parts == 0 then
+    return ""
+  end
+
+  return table.concat(parts, " ")
+end
+
+return M
+
+
+
+========================================
+FILE: lua/overseer_cargo.lua_submenu
+========================================
+
+local overseer = require("overseer")
+
+local M = {}
+
+local function get_cargo_members(cb)
+	vim.fn.jobstart({ "cargo", "metadata", "--no-deps", "--format-version", "1" }, {
+		stdout_buffered = true,
+		on_stdout = function(_, output)
+			local ok, data = pcall(vim.json.decode, table.concat(output, ""))
+			if not ok or not data.packages then
+				cb({})
+				return
+			end
+			local members = {}
+			for _, pkg in ipairs(data.packages) do
+				table.insert(members, pkg.name)
+			end
+			table.sort(members)
+			cb(members)
+		end,
+	})
+end
+
+local function run_cargo(subcommand, member, extra_args)
+	local args = { subcommand }
+	if member ~= "(all)" then
+		vim.list_extend(args, { "-p", member })
+	elseif subcommand ~= "run" then
+		table.insert(args, "--workspace")
+	end
+	if extra_args then
+		vim.list_extend(args, extra_args)
+	end
+
+	overseer
+		.new_task({
+			name = "cargo " .. table.concat(args, " "),
+			cmd = { "cargo" },
+			args = args,
+			components = { "default" },
+		})
+		:start()
+end
+
+local actions = {
+	{ label = "Build", subcommand = "build" },
+	{ label = "Run", subcommand = "run" }, -- no "(all)" offered for run, see below
+	{ label = "Test", subcommand = "test" },
+	{ label = "Clippy", subcommand = "clippy", extra_args = { "--all-targets", "--all-features" } },
+}
+
+function M.pick()
+	if vim.fn.filereadable("Cargo.toml") ~= 1 then
+		vim.notify("No Cargo.toml in cwd", vim.log.levels.WARN)
+		return
+	end
+
+	-- Step 1: which cargo action
+	vim.ui.select(actions, {
+		prompt = "Cargo",
+		format_item = function(item)
+			return item.label
+		end,
+	}, function(action)
+		if not action then
+			return
+		end
+
+		-- Step 2: which package
+		get_cargo_members(function(members)
+			local choices = members
+			if action.subcommand ~= "run" then
+				choices = vim.deepcopy(members)
+				table.insert(choices, 1, "(all)")
+			end
+
+			vim.ui.select(choices, {
+				prompt = action.label .. ": package",
+			}, function(member)
+				if not member then
+					return
+				end
+				run_cargo(action.subcommand, member, action.extra_args)
+			end)
+		end)
+	end)
+end
+
+return M
+
+
+
+========================================
+FILE: lua/overseer/component/user/on_start_notify.lua
+========================================
+
+return {
+	desc = "Notify when the task starts running",
+	constructor = function()
+		return {
+			on_start = function(_, task)
+				vim.notify("▶ " .. task.name, vim.log.levels.INFO, { title = "Overseer" })
+			end,
+		}
+	end,
+}
+
+
+
+========================================
+FILE: lua/overseer/template/cargo_workspace.lua
+========================================
+
+local overseer = require("overseer")
+
+return {
+	generator = function(search, cb)
+		if vim.fn.filereadable(search.dir .. "/Cargo.toml") ~= 1 then
+			cb({})
+			return
+		end
+
+		vim.fn.jobstart({ "cargo", "metadata", "--no-deps", "--format-version", "1" }, {
+			cwd = search.dir,
+			stdout_buffered = true,
+			on_stdout = function(_, output)
+				local ok, data = pcall(vim.json.decode, table.concat(output, ""))
+				if not ok or not data.packages then
+					cb({})
+					return
+				end
+
+				local members = {}
+				for _, pkg in ipairs(data.packages) do
+					table.insert(members, pkg.name)
+				end
+				table.sort(members)
+
+				local templates = {}
+
+				for _, member in ipairs(members) do
+					table.insert(templates, {
+						name = "cargo build " .. member,
+						builder = function()
+							return { cmd = { "cargo" }, args = { "build", "-p", member }, components = { "default" } }
+						end,
+						tags = { overseer.TAG.BUILD },
+					})
+					table.insert(templates, {
+						name = "cargo run " .. member,
+						builder = function()
+							return { cmd = { "cargo" }, args = { "run", "-p", member }, components = { "default" } }
+						end,
+						tags = { overseer.TAG.RUN },
+					})
+					table.insert(templates, {
+						name = "cargo test " .. member,
+						builder = function()
+							return { cmd = { "cargo" }, args = { "test", "-p", member }, components = { "default" } }
+						end,
+						tags = { overseer.TAG.TEST },
+					})
+					table.insert(templates, {
+						name = "cargo clippy " .. member,
+						builder = function()
+							return {
+								cmd = { "cargo" },
+								args = { "clippy", "-p", member, "--all-targets", "--all-features" },
+								components = { "default" },
+							}
+						end,
+					})
+				end
+
+				table.insert(templates, {
+					name = "cargo build (all)",
+					builder = function()
+						return { cmd = { "cargo" }, args = { "build", "--workspace" }, components = { "default" } }
+					end,
+					tags = { overseer.TAG.BUILD },
+				})
+				table.insert(templates, {
+					name = "cargo test (all)",
+					builder = function()
+						return { cmd = { "cargo" }, args = { "test", "--workspace" }, components = { "default" } }
+					end,
+					tags = { overseer.TAG.TEST },
+				})
+				table.insert(templates, {
+					name = "cargo clippy (all)",
+					builder = function()
+						return {
+							cmd = { "cargo" },
+							args = { "clippy", "--workspace", "--all-targets", "--all-features" },
+							components = { "default" },
+						}
+					end,
+				})
+
+				cb(templates)
+			end,
+		})
+	end,
+	cache_key = function(opts)
+		return vim.fs.find("Cargo.toml", { upward = true, type = "file", path = opts.dir })[1]
+	end,
+}
+
+
+
+========================================
+FILE: lua/overseer/template/frontend_bun.lua
+========================================
+
+return {
+	generator = function(search, cb)
+		local frontend_pkg = search.dir .. "/frontend/package.json"
+		if vim.fn.filereadable(frontend_pkg) ~= 1 then
+			cb({})
+			return
+		end
+
+		cb({
+			{
+				name = "bun dev (frontend)",
+				builder = function()
+					return {
+						cmd = { "bun", "run", "dev" },
+						cwd = search.dir .. "/frontend",
+						components = { "default" },
+					}
+				end,
+			},
+			{
+				name = "bun build (frontend)",
+				builder = function()
+					return {
+						cmd = { "bun", "run", "build" },
+						cwd = search.dir .. "/frontend",
+						components = { "default" },
+					}
+				end,
+			},
+		})
+	end,
+	cache_key = function(opts)
+		return opts.dir .. "/frontend/package.json"
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/autopairs.lua
+========================================
+
+return {
+  "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  config = function()
+    require("nvim-autopairs").setup({
+      check_ts = true, -- use treesitter to check pairs
+    })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/autotag.lua
+========================================
+
+return {
+	"windwp/nvim-ts-autotag",
+	dependencies = { "nvim-treesitter/nvim-treesitter" },
+	event = "InsertEnter",
+	config = function()
+		require("nvim-ts-autotag").setup({
+			opts = {
+				enable_close = true, -- Auto close tags
+				enable_rename = true, -- Auto rename matching HTML/JSX tags
+				enable_close_on_slash = true, -- Auto close on trailing </
+			},
+		})
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/colorscheme.lua
+========================================
+
+return {
+  "EdenEast/nightfox.nvim",
+  --"nyoom-engineering/oxocarbon.nvim",
+  priority = 1000,
+  config = function ()
+    --vim.opt.background = "dark"
+    --vim.cmd.colorscheme("oxocarbon")
+    vim.cmd.colorscheme("carbonfox")
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/comment.lua
+========================================
+
+return {
+  "numToStr/Comment.nvim",
+  event = "VeryLazy",
+  config = function()
+    require("Comment").setup()
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/completion.lua
+========================================
+
+return {
+  "saghen/blink.cmp",
+  version = "*",
+  ---@type blink.cmp.Config
+  opts = {
+    keymap = {
+      preset = "none",
+      ["<Tab>"] = { "select_next", "fallback" },
+      ["<S-Tab>"] = { "select_prev", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
+      ["<C-Space>"] = { "show", "fallback" },
+      ["<C-e>"] = { "hide", "fallback" },
+      ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+    },
+    appearance = {
+      nerd_font_variant = "mono",
+    },
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
+    },
+    completion = {
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 200,
+      },
+    },
+  },
+}
+
+
+
+========================================
+FILE: lua/plugins/conform.lua
+========================================
+
+return {
+	"stevearc/conform.nvim",
+	config = function()
+		require("conform").setup({
+			formatters_by_ft = {
+				lua = { "stylua" },
+				rust = { "rustfmt" },
+				c = { "clang_format" },
+				cpp = { "clang_format" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
+				javascript = { "prettier" },
+				javascriptreact = { "prettier" },
+				json = { "prettier" },
+				css = { "prettier" },
+				html = { "prettier" },
+			},
+			format_on_save = {
+				timeout_ms = 3000,
+				lsp_fallback = true,
+			},
+		})
+
+		vim.keymap.set("n", "<leader>gf", function()
+			require("conform").format({ async = true })
+		end, { desc = "Format file" })
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/crates.lua
+========================================
+
+return {
+  "saecki/crates.nvim",
+  event = { "BufRead Cargo.toml" },
+  config = function()
+    require("crates").setup({
+      popup = {
+        border = "rounded",
+      },
+    })
+
+    vim.keymap.set("n", "<leader>cv", function()
+      require("crates").show_versions_popup()
+    end, { desc = "Crate versions" })
+
+    vim.keymap.set("n", "<leader>cf", function()
+      require("crates").show_features_popup()
+    end, { desc = "Crate features" })
+
+    vim.keymap.set("n", "<leader>cu", function()
+      require("crates").update_crate()
+    end, { desc = "Update crate" })
+
+    vim.keymap.set("n", "<leader>cU", function()
+      require("crates").update_all_crates()
+    end, { desc = "Update all crates" })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/dap.lua
+========================================
+
+return {
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio", -- required by dap-ui
+		},
+		config = function()
+			local dap = require("dap")
+			local dapui = require("dapui")
+
+			-- UI setup
+			dapui.setup()
+
+			-- Auto open/close UI
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close()
+			end
+
+			-- js-debug-adapter config (works for Bun, Node, browsers)
+			local js_debug = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
+
+			for _, adapter in ipairs({ "pwa-node", "pwa-chrome" }) do
+				dap.adapters[adapter] = {
+					type = "server",
+					host = "localhost",
+					port = "${port}",
+					executable = {
+						command = "bun", -- or "node" if you prefer
+						args = { js_debug, "${port}" },
+					},
+				}
+			end
+
+			-- Bun / TypeScript launch configs
+			for _, lang in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+				dap.configurations[lang] = {
+					{
+						type = "pwa-node",
+						request = "launch",
+						name = "Launch with Bun",
+						runtimeExecutable = "bun",
+						program = "${file}",
+						cwd = "${workspaceFolder}",
+						sourceMaps = true,
+						resolveSourceMapLocations = {
+							"${workspaceFolder}/**",
+							"!**/node_modules/**",
+						},
+					},
+					{
+						type = "pwa-node",
+						request = "attach",
+						name = "Attach to Bun (--inspect)",
+						address = "localhost",
+						port = 9229,
+						cwd = "${workspaceFolder}",
+						sourceMaps = true,
+					},
+				}
+			end
+
+			-- Keymaps
+			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+			vim.keymap.set("n", "<leader>dB", function()
+				dap.set_breakpoint(vim.fn.input("Condition: "))
+			end, { desc = "Conditional breakpoint" })
+			vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Continue" })
+			vim.keymap.set("n", "<leader>dn", dap.step_over, { desc = "Step over" })
+			vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step into" })
+			vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "Step out" })
+			vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "REPL" })
+			vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
+		end,
+	},
+}
+
+
+
+========================================
+FILE: lua/plugins/diagnostic.lua
+========================================
+
+return {
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		config = function()
+			require("tiny-inline-diagnostic").setup()
+		end,
+	},
+	{
+		"folke/trouble.nvim",
+		opts = {},
+		keys = {
+			{
+				"<leader>xx",
+				function()
+					require("trouble").open("diagnostics")
+				end,
+				desc = "Trouble: Diagnostics (workspace)",
+			},
+			{
+				"<leader>xX",
+				function()
+					require("trouble").open("diagnostics", { filter = { buf = 0 } })
+				end,
+				desc = "Trouble: Diagnostics (buffer)",
+			},
+			{
+				"<leader>xr",
+				function()
+					require("trouble").open("lsp_references")
+				end,
+				desc = "Trouble: LSP References",
+			},
+		},
+	},
+}
+
+
+
+========================================
+FILE: lua/plugins/git.lua
+========================================
+
+return {
+  {
+    "kdheepak/lazygit.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
+    end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", { desc = "Diff view" })
+      vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "File history" })
+      vim.keymap.set("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "Close diff" })
+    end,
+  },
+}
+
+
+
+========================================
+FILE: lua/plugins/gitsigns.lua
+========================================
+
+return {
+  "lewis6991/gitsigns.nvim",
+  config = function()
+    require("gitsigns").setup({
+      signs = {
+        add = { text = "+" },
+        change = { text = "~" },
+        delete = { text = "_" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "~" },
+      },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+        vim.keymap.set("n", "]c", gs.next_hunk, { desc = "Next hunk", buffer = bufnr })
+        vim.keymap.set("n", "[c", gs.prev_hunk, { desc = "Prev hunk", buffer = bufnr })
+        vim.keymap.set("n", "<leader>hs", gs.stage_hunk, { desc = "Stage hunk", buffer = bufnr })
+        vim.keymap.set("n", "<leader>hr", gs.reset_hunk, { desc = "Reset hunk", buffer = bufnr })
+        vim.keymap.set("n", "<leader>hp", gs.preview_hunk, { desc = "Preview hunk", buffer = bufnr })
+        vim.keymap.set("n", "<leader>hb", gs.blame_line, { desc = "Blame line", buffer = bufnr })
+      end,
+    })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/indent-blankline.lua
+========================================
+
+return {
+  "lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
+  event = "VeryLazy",
+  config = function()
+    require("ibl").setup({
+      indent = {
+        char = "┊",
+      },
+      scope = {
+        enabled = true,
+      },
+    })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/lensline.lua
+========================================
+
+return {
+	"oribarilan/lensline.nvim",
+	tag = "2.0.0", -- or: branch = 'release/2.x' for latest non-breaking updates
+	event = "LspAttach",
+	config = function()
+		require("lensline").setup()
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/lspconfig.lua
+========================================
+
+return {
+	"neovim/nvim-lspconfig",
+	dependencies = {
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+	},
+	config = function()
+		vim.lsp.config.lua_ls = {
+			settings = {
+				Lua = {
+					runtime = {
+						version = "LuaJIT",
+					},
+					workspace = {
+						checkThirdParty = false,
+						library = {
+							vim.env.VIMRUNTIME,
+							"${3rd}/luv/library",
+							-- include all lazy plugins
+							vim.fn.stdpath("data") .. "/lazy/nvim",
+						},
+					},
+					diagnostics = {
+						globals = { "vim" },
+					},
+					completion = {
+						callSnippet = "Replace",
+					},
+				},
+			},
+		}
+
+		vim.lsp.config.vtsls = {}
+		vim.lsp.config.tailwindcss = {}
+		vim.lsp.config.bashls = {}
+		vim.lsp.config.shellcheck = {}
+		vim.lsp.config.emmet_language_server = {
+			filetypes = { "tsx", "html", "css", "typescriptreact" },
+			init_options = {
+				-- 🚀 Force Emmet to treat TSX/JSX as pure HTML so it outputs class="..."
+				includeLanguages = {
+					typescriptreact = "html",
+					javascriptreact = "html",
+				},
+				preferences = {
+					["jsx.enforceParameterAttribute"] = false,
+					["markup.attributes/class"] = "class",
+				},
+			},
+		}
+
+		vim.lsp.config.clangd = {
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--header-insertion=iwyu",
+				"--query-driver=**/xtensa-esp32*/bin/*",
+				"--clang-tidy",
+				"--fallback-style=none",
+			},
+			filetypes = { "c", "cpp", "objc", "objcpp" },
+			root_markers = {
+				"compile_commands.json",
+				"compile_flags.txt",
+				".git",
+				"platformio.ini",
+			},
+		}
+
+		vim.lsp.enable({ "lua_ls", "vtsls", "tailwindcss", "clangd", "bashls", "shellcheck", "emmet_language_server" })
+
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover docs" })
+		vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+		vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "References" })
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/lualine.lua
+========================================
+
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  event = "VeryLazy",
+  config = function()
+    local forgejo = require("lualine.forgejo")
+
+    require("lualine").setup({
+      options = {
+        theme = "auto",
+        component_separators = "|",
+        section_separators = { left = "", right = "" },
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_c = { "filename" },
+        lualine_x = { forgejo.component, "encoding", "filetype" },
+        lualine_y = { "progress" },
+        lualine_z = { "location" },
+      }
+    })
+  end
+}
+
+
+
+========================================
+FILE: lua/plugins/mason.lua
+========================================
+
+return {
+	{
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup()
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {
+				"lua_ls",
+				"vtsls",
+				"tailwindcss",
+				"clangd",
+				"bashls",
+				"emmet_language_server",
+			},
+			automatic_installation = true,
+		},
+	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {
+				"prettier", -- Formatter
+				"eslint_d", -- Linter
+				"stylua", -- Lua formatter
+				"clang-format", -- C/C++ formatter
+				"shellcheck", -- Shell linter
+				"shfmt", -- Shell formatter
+				"js-debug-adapter", -- Debugger backend
+			},
+			run_on_start = true,
+		},
+	},
+}
+
+
+
+========================================
+FILE: lua/plugins/neo-tree.lua
+========================================
+
+return {
+	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"MunifTanjim/nui.nvim",
+	},
+	config = function()
+		require("neo-tree").setup({
+			close_if_last_window = true,
+			filesystem = {
+				filtered_items = {
+					visible = true,
+					hide_dotfiles = false,
+					hide_gitignored = true,
+				},
+				follow_current_file = {
+					enabled = true,
+				},
+			},
+			window = {
+				width = 30,
+			},
+		})
+
+		vim.keymap.set("n", "<C-n>", function()
+			require("neo-tree.command").execute({
+				action = "focus",
+				source = "filesystem",
+				position = "left",
+			})
+		end, { desc = "Neo-tree" })
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/noice.lua
+========================================
+
+return {
+  "folke/noice.nvim",
+  event = "VeryLazy",
+  dependencies = {
+    "MunifTanjim/nui.nvim",
+    "rcarriga/nvim-notify",
+  },
+  config = function()
+    require("notify").setup({
+      top_down = false,
+    })
+
+    require("noice").setup({
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+        progress = {
+          enabled = true,
+          format = "lsp_progress",
+          format_done = "lsp_progress_done",
+          throttle = 1000 / 30,
+          view = "mini",
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+      },
+      cmdline = {
+        view = "cmdline_popup",
+        format = {
+          cmdline = { pattern = "^:", icon = "", lang = "vim" },
+          search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+          search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+        },
+      },
+      views = {
+        cmdline_popup = {
+          position = {
+            row = "50%",
+            col = "50%",
+          },
+          size = {
+            width = 60,
+            height = "auto",
+          },
+        },
+        mini = {
+          win_options = {
+            winblend = 0,
+          },
+          position = {
+            row = -2,
+            col = "100%",
+          },
+        },
+      },
+    })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/nvim-highlight-colors.lua
+========================================
+
+return {
+  "brenoprata10/nvim-highlight-colors",
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    require("nvim-highlight-colors").setup({
+      render = "background",
+      enable_named_colors = true,
+      enable_tailwind = true, -- important
+    })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/overseer.lua
+========================================
+
+return {
+	"stevearc/overseer.nvim",
+	opts = {
+		templates = { "builtin" },
+		disable_template_modules = { "overseer.template.cargo" },
+		task_list = {
+			direction = "right",
+			default_detail = 2,
+			bindings = {
+				["<CR>"] = "RunAction",
+			},
+		},
+		component_aliases = {
+			default = {
+				"user.on_start_notify",
+				"on_exit_set_status",
+				{ "on_complete_notify", statuses = { "FAILURE", "SUCCESS" } },
+				"on_complete_dispose",
+			},
+		},
+	},
+	keys = {
+		{ "<leader>to", "<cmd>OverseerToggle<cr>", desc = "Toggle Overseer Task Panel" },
+		{ "<leader>tr", "<cmd>OverseerRun<cr>", desc = "Run Workspace Task" },
+		{
+			"<leader>tc",
+			function()
+				require("overseer_cargo").pick()
+			end,
+			desc = "Cargo Task (submenu)",
+		},
+		{ "<leader>tq", "<cmd>OverseerQuickAction<cr>", desc = "Overseer Quick Action" },
+		{ "<leader>tR", "<cmd>OverseerRestartLast<cr>", desc = "Restart Last Task" },
+	},
+}
+
+
+
+========================================
+FILE: lua/plugins/platformio.lua
+========================================
+
+return {
+	"anurag3301/nvim-platformio.lua",
+	dependencies = {
+		{ "akinsho/toggleterm.nvim" },
+		{ "nvim-telescope/telescope.nvim" },
+		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-lua/plenary.nvim" },
+		{ "folke/which-key.nvim" },
+		{ "nvim-treesitter/nvim-treesitter" },
+	},
+	config = function()
+		vim.g.pioConfig = {
+			lsp = "clangd",
+			clangd_source = "compiledb",
+			menu_key = "<leader>\\",
+			debug = false,
+		}
+
+		local pok, platformio = pcall(require, "platformio")
+		if pok then
+			platformio.setup(vim.g.pioConfig)
+		end
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/presence.lua
+========================================
+
+return {
+	"andweeb/presence.nvim",
+	config = function()
+		require("presence").setup({
+			auto_update = true,
+			neovim_image_text = "Neovim",
+			main_image = "neovim",
+			enable_line_number = false,
+			buttons = true,
+
+			editing_text = "",
+			file_explorer_text = "",
+			git_commit_text = "",
+			plugin_manager_text = "",
+			reading_text = "",
+			workspace_text = "Working on %s",
+			line_number_text = "",
+		})
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/rustaceanvim.lua
+========================================
+
+return {
+	"mrcjkb/rustaceanvim",
+	version = "^9",
+	lazy = false,
+	ft = { "rust" },
+	config = function()
+		vim.g.rustaceanvim = {
+			tools = {
+				float_win_config = {
+					border = "rounded",
+				},
+			},
+			server = {
+				on_attach = function(_, bufnr)
+					vim.keymap.set("n", "<leader>ca", function()
+						vim.cmd.RustLsp("codeAction")
+					end, { desc = "Code Action", buffer = bufnr })
+
+					vim.keymap.set("n", "<leader>rr", function()
+						vim.cmd.RustLsp("runnables")
+					end, { desc = "Rust Runnables", buffer = bufnr })
+
+					vim.keymap.set("n", "<leader>rt", function()
+						vim.cmd.RustLsp("testables")
+					end, { desc = "Rust Testables", buffer = bufnr })
+
+					vim.keymap.set("n", "<leader>re", function()
+						vim.cmd.RustLsp("expandMacro")
+					end, { desc = "Expand Macro", buffer = bufnr })
+
+					vim.keymap.set("n", "K", function()
+						vim.cmd.RustLsp({ "hover", "actions" })
+					end, { desc = "Hover", buffer = bufnr })
+				end,
+				default_settings = {
+					["rust-analyzer"] = {
+						cargo = {
+							allFeatures = true,
+						},
+						check = {
+							command = "clippy",
+						},
+						procMacro = {
+							enable = true,
+						},
+					},
+				},
+			},
+		}
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/smartcolumn.lua
+========================================
+
+return {
+	"m4xshen/smartcolumn.nvim",
+	opts = {
+		colorcolumn = "100",
+		custom_colorcolumn = {
+			rust = "100",
+			lua = "120",
+			css = { "100", "120" },
+		},
+	},
+}
+
+
+
+========================================
+FILE: lua/plugins/telescope.lua
+========================================
+
+return {
+	"nvim-telescope/telescope.nvim",
+	dependencies = { "nvim-lua/plenary.nvim" },
+	config = function()
+		local telescope = require("telescope")
+		telescope.setup({
+			extentions = {
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown({}),
+				},
+			},
+		})
+		telescope.load_extension("ui-select")
+
+		local builtin = require("telescope.builtin")
+		vim.keymap.set("n", "<C-p>", builtin.find_files, { desc = "Find files" })
+		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+		vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
+		vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/todo-comments.lua
+========================================
+
+return {
+  "folke/todo-comments.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  event = "VeryLazy",
+  config = function()
+    require("todo-comments").setup()
+
+    vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find TODOs" })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/toggleterm.lua
+========================================
+
+return {
+  "akinsho/toggleterm.nvim",
+  version = "*",
+  config = function()
+    require("toggleterm").setup({
+      open_mapping = [[<c-\>]],
+      direction = "float",
+      float_opts = {
+        border = "curved",
+      },
+    })
+
+    local Terminal = require("toggleterm.terminal").Terminal
+
+    local cargo_run = Terminal:new({ cmd = "cargo run", hidden = true, direction = "float" })
+    local cargo_test = Terminal:new({ cmd = "cargo test", hidden = true, direction = "float" })
+    local cargo_build = Terminal:new({ cmd = "cargo build", hidden = true, direction = "float" })
+
+    vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", { desc = "Float terminal" })
+    vim.keymap.set("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "Horizontal terminal" })
+    vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical size=80<cr>", { desc = "Vertical terminal" })
+    vim.keymap.set("n", "<leader>cr", function() cargo_run:toggle() end, { desc = "Cargo run" })
+    vim.keymap.set("n", "<leader>cb", function() cargo_build:toggle() end, { desc = "Cargo build" })
+    vim.keymap.set("n", "<leader>ct", function() cargo_test:toggle() end, { desc = "Cargo test" })
+  end,
+}
+
+
+
+========================================
+FILE: lua/plugins/treesitter.lua
+========================================
+
+return {
+	"romus204/tree-sitter-manager.nvim",
+	event = { "BufReadPost", "BufNewFile" },
+	cmd = { "TSManager" }, -- Provides a UI similar to Mason if you run :TSManager
+	config = function()
+		require("tree-sitter-manager").setup({
+			-- Auto-download and update missing parsers on file open
+			auto_install = true,
+
+			-- Ensure these are immediately ready for your stack
+			ensure_installed = { "typescript", "javascript", "tsx", "html", "css", "bash" },
+
+			-- Prevent conflicts with core Neovim 0.12 pre-bundled parsers
+			noauto_install = { "c", "lua", "markdown", "vim", "vimdoc" },
+		})
+	end,
+}
+
+
+
+========================================
+FILE: lua/plugins/which-key.lua
+========================================
+
+return {
+	"folke/which-key.nvim",
+	event = "VeryLazy",
+	config = function()
+		local wk = require("which-key")
+		wk.setup()
+
+		-- Register group names so the menu is organized
+		wk.add({
+			{ "<leader>c", group = "code" },
+			{ "<leader>f", group = "find" },
+			{ "<leader>g", group = "goto" },
+			{ "<leader>h", group = "hunks" },
+			{ "<leader>r", group = "rust" },
+			{ "<leader>t", group = "terminal" },
+			{ "<leader>d", group = "debug" },
+		})
+	end,
+}
+
+
+
+========================================
+FILE: lua/vim-options.lua
+========================================
+
+-- Basic settings
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.swapfile = false
+vim.opt.background = "dark"
+vim.opt.termguicolors = true
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes" -- always show, prevents layout jumping
+
+vim.opt.spelllang = { "en_us", "nl" }
+vim.opt.spellsuggest = "best,9"
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown", "gitcommit", "text", "tex" },
+	callback = function()
+		vim.opt_local.spell = true
+	end,
+})
+
+-- Folding
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+	pattern = { "*" },
+	callback = function()
+		vim.opt.foldmethod = "expr"
+		vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+	end,
+})
+
+-- Leader
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- Indenting
+vim.keymap.set("i", "<S-Tab>", "<C-d>", { desc = "Dedent" })
+
+-- Diagnostic
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.INFO] = "",
+			[vim.diagnostic.severity.HINT] = "󰌵",
+		},
+	},
+})
+
+-- Diagnostic keymaps
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Diagnostics list" })
+
+vim.keymap.set("n", "]s", "]s", { desc = "Next misspelled word" })
+vim.keymap.set("n", "[s", "[s", { desc = "Prev misspelled word" })
+vim.keymap.set("n", "z=", "z=", { desc = "Spelling suggestions" })
+vim.keymap.set("n", "zg", "zg", { desc = "Add word to dictionary" })
+vim.keymap.set("n", "zw", "zw", { desc = "Mark word as wrong" })
+
+
+
